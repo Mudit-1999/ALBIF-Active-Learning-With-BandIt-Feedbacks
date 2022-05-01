@@ -134,21 +134,12 @@ if __name__=="__main__":
   parser.add_argument("--num_class", type=int,default=10)
   parser.add_argument("--repition", type=int, default=20)
   parser.add_argument("--size", type=float,default=1e5)
-  parser.add_argument("--gamma", type=float,default=0.003906)
-  parser.add_argument("--delta", type=int, default=4)
-  parser.add_argument("--lamda", type=float, default=0.125)
-
-
-
-    # gamma$  & $0.007812$  & $0.003906$ & $0.003906$& $0.003906$ & $0.003906$ & $0.031250$ & $0.007812$
-    # eta$    & $16.0$      & $16.0$     & $128.0$   & $32.0$     & $64.0$     & $8.0$      & $8.0$ 
-   # lambda$  & $0.125$     & $0.25$     & $32.0$    & $8.0$      & $0.031250$ & $0.000977$ & $2.0$ 
-  # parser.add_argument("--ll_gamma", type=int,default=-8)
-  # parser.add_argument("--ul_gamma",type=int,default=0)
-  # parser.add_argument("--ll_delta", type=int, default=-10)
-  # parser.add_argument("--ul_delta", type=int, default=-1)
-  # parser.add_argument("--ll_lamda", type=int, default=-12)
-  # parser.add_argument("--ul_lamda", type=int, default=7)
+  parser.add_argument("--ll_gamma", type=int,default=-8)
+  parser.add_argument("--ul_gamma",type=int,default=0)
+  parser.add_argument("--ll_delta", type=int, default=-10)
+  parser.add_argument("--ul_delta", type=int, default=-1)
+  parser.add_argument("--ll_lamda", type=int, default=-12)
+  parser.add_argument("--ul_lamda", type=int, default=7)
 
   args, _ = parser.parse_known_args()
 
@@ -156,12 +147,8 @@ if __name__=="__main__":
 
   prefix=f"/home/{os.getenv('USER')}/exp/dataset"
 # Dataset 
-  # Iris Data
-  if args.data=='iris':
-    d1 = load_iris()
-    data = np.hstack( (d1.data,d1.target.reshape(-1,1)))
   # SynSep Data
-  elif args.data=='synsep':
+  if args.data=='synsep':
     data=np.load(f'{prefix}/syn_sep.npy','r')
   # SynNonSep Data
   elif args.data=='synnonsep':
@@ -180,25 +167,9 @@ if __name__=="__main__":
     data=np.array(dataset)
   elif args.data=='ecoli':
     data=np.load(f'{prefix}/ecoli.npy','r')
-  elif args.data=='sat':
-    data=np.load(f'{prefix}/sat.npy','r')
   elif args.data=='abalone':
     data=np.load(f'{prefix}/abalone.npy','r')
-  elif args.data=='mnist':
-    data=np.load(f'{prefix}/mnist.npy','r')
-  elif args.data=='cifar10':
-    data=np.load(f'{prefix}/cifar10.npy','r')
-  elif args.data=='mnist100':
-    data=np.load(f'{prefix}/mnist100.npy','r')
-  # New 4 Group dataset 
-  elif args.data=='news4':
-    data=np.load(f'{prefix}/news20.npy','r')
-  elif args.data=='wine':
-    d1 = load_wine()
-    data = np.hstack( (d1.data,d1.target.reshape(-1,1)))
-  elif args.data=='digits':
-    d1 = load_digits()
-    data = np.hstack( (d1.data,d1.target.reshape(-1,1)))
+ 
   # print(data.shape)  
   data=np.float64(data)
 
